@@ -43,7 +43,7 @@ export class AppComponent implements OnInit {
 
   // Auto complete input vars
   public completeService;
-  protected dataService: CompleterData;
+  public dataService: CompleterData;
 
   // WordCloud controls
   public canvasWidth: number;
