@@ -1,20 +1,124 @@
 <!--The content below is only a placeholder and can be replaced.-->
-<div style="text-align:center">
-  <h1>
-    Welcome to {{ title }}!
-  </h1>
-  <img width="300" alt="Angular Logo" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTAgMjUwIj4KICAgIDxwYXRoIGZpbGw9IiNERDAwMzEiIGQ9Ik0xMjUgMzBMMzEuOSA2My4ybDE0LjIgMTIzLjFMMTI1IDIzMGw3OC45LTQzLjcgMTQuMi0xMjMuMXoiIC8+CiAgICA8cGF0aCBmaWxsPSIjQzMwMDJGIiBkPSJNMTI1IDMwdjIyLjItLjFWMjMwbDc4LjktNDMuNyAxNC4yLTEyMy4xTDEyNSAzMHoiIC8+CiAgICA8cGF0aCAgZmlsbD0iI0ZGRkZGRiIgZD0iTTEyNSA1Mi4xTDY2LjggMTgyLjZoMjEuN2wxMS43LTI5LjJoNDkuNGwxMS43IDI5LjJIMTgzTDEyNSA1Mi4xem0xNyA4My4zaC0zNGwxNy00MC45IDE3IDQwLjl6IiAvPgogIDwvc3ZnPg==">
+<!-- <div style="height: 15%; text-align: center">
+  <img src="assets/cg_logo.png" width="300px;" style="margin-top:20px; margin-bottom: 20px;">
+</div> -->
+<div class="row" style="margin-top: 20px;">
+  <div class="col-1">
+  </div>
+  <div class="col-md-10 col-sm-12">
+    <form class="text-center">
+          <div class="input-group row">
+              <div class="col-md-11 col-sm-12 display-inline row">
+                  <div class="col-4">
+                      <input [(ngModel)]="newWord" [ngModelOptions]="{standalone: true}" type="text" class="form-control my-col" placeholder="Entrez un mot">
+                  </div>
+                  <div class="col-4">
+                      <ng2-completer 
+                          [(ngModel)]="theme" 
+                          [ngModelOptions]="{standalone: true}"
+                          [datasource]="dataService" 
+                          [openOnFocus]="true"
+                          [selectOnClick]="true"
+                          [fillHighlighted]="false"
+                          [autoHighlight]="true"
+                          inputClass = "form-control my-col"
+                          placeholder = "Entrez un thème"
+                          [minSearchLength]="0">
+                      </ng2-completer>
+                  </div>
+                  <div class="col-2">
+                      <div class="input-group-append">
+                          <button class="btn btn-outline-secondary btn-outline-cap dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                              <span *ngIf="colorIndex >= 0">
+                                  <i class="fas fa-circle"  [ngClass]="{'colortext2': colorIndex === 0, 'colortext3': colorIndex === 1, 'colortext4': colorIndex === 2, 'colortext5': colorIndex === 3}"></i>
+                                  {{colorArray[colorIndex].text}}
+                              </span>
+                              <span *ngIf="colorIndex === -1">Couleur</span>
+                          </button>
+                          <div class="dropdown-menu">
+                              <a class="dropdown-item" *ngFor="let color of colorArray; let i = index" (click)="chooseColor(i)" href="#"><i class="fas fa-circle" [ngClass]="{'colortext2': i === 0, 'colortext3': i === 1, 'colortext4': i === 2, 'colortext5': i === 3}"></i>&nbsp;&nbsp;{{color.text}}</a>
+                          </div>
+                      </div>
+                  </div>
+                  <div class="col-2">
+                      <div class="input-group-append">
+                          <button class="btn btn-outline-secondary btn-outline-cap dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                              <span *ngIf="impIndex > -1">
+                                  {{importanceArray[impIndex]}}
+                              </span>
+                              <span *ngIf="impIndex === -1">Importance</span>
+                          </button>
+                          <div class="dropdown-menu">
+                              <a class="dropdown-item" *ngFor="let imp of importanceArray; let j = index" (click)="chooseImportance(j)" href="#">{{importanceArray[j]}}</a>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+              <div class="col-md-1 col-sm-12 text-center">
+                  <button class="btn btn-primary color2" (click)="update()"><i class="fas fa-plus"></i></button>&nbsp;
+                  <!-- <button class="btn btn-primary color3" (click)="removeAll()"><i class="fas fa-times"></i></button>&nbsp;
+                  <button class="btn btn-primary color1" (click)="reload()"><i class="fas fa-sync-alt"></i></button>&nbsp;
+                  <button class="btn btn-primary color4" (click)="exportPNG()"><i class="fas fa-download"></i></button>&nbsp;
+                  <button class="btn btn-primary color5" (click)="selectPan()"><i class="fas" [ngClass]="{'fa-arrows-alt': isPanModeSelected, 'fa-ban': !isPanModeSelected }"></i></button>&nbsp;
+                  <button class="btn btn-primary color2" (click)="zoomIn()"><i class="fas fa-search-plus"></i></button>&nbsp;
+                  <button class="btn btn-primary color1" (click)="zoomOut()"><i class="fas fa-search-minus"></i></button>&nbsp; -->
+              </div> 
+              
+          </div>
+      <!-- <input [(ngModel)]="newWord" [ngModelOptions]="{standalone: true}" type="text" class="form-control" id="sampleWord" placeholder="Entrez un mot">
+      <div class="dropdown">
+          <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Dropdown button
+          </button>
+          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+              <a class="dropdown-item" href="#"><i class="fas fa-circle"></i>&nbsp;Action</a>
+              <a class="dropdown-item" href="#"><i class="fas fa-circle"></i>&nbsp;Another action</a>
+              <a class="dropdown-item" href="#"><i class="fas fa-circle"></i>&nbsp;Something else here</a>
+          </div>
+      </div>
+      <button [(colorPicker)]="color" [style.background]="color" class="btn btn-primary color1" (click)="update()">Go</button> -->
+    </form>
+  </div>
+  <div class="col-1"></div>
 </div>
-<h2>Here are some links to help you start: </h2>
-<ul>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://angular.io/tutorial">Tour of Heroes</a></h2>
-  </li>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://github.com/angular/angular-cli/wiki">CLI Documentation</a></h2>
-  </li>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://blog.angular.io/">Angular blog</a></h2>
-  </li>
-</ul>
+<div class="div-svg text-center" *ngIf="activeViewIndex === 0">
+  <div class="auto-width" #myIdentifier>
+      <div AgWordCloud
+      class="auto-width"
+      #word_cloud_chart=ag-word-cloud
+      [wordData]="word_cloud"
+       [options]="options"
+       [rotation]="isRotationEnable"
+       [drag]="isDragWordEnable"
+       [pan]="isPanEnable"
+       [zoom]="isZoomEnable">
+      </div>
+  </div>
+  <div class="footer-svg">
+      <div class="row footer-row">
+        <div class="col-2" (click)="removeAll()">
+            <i class="fas fa-times footer-ico"></i>
+        </div>
+        <div class="col-2" (click)="reload()">
+            <i class="fas fa-sync-alt footer-ico"></i>
+        </div>
+        <div class="col-2" (click)="exportPNG()" style="border-right: 2px solid white">
+            <i class="fas fa-download footer-ico"></i>
+        </div>
+        <div class="col-2" (click)="zoomIn()">
+            <i class="fas fa-search-plus footer-ico"></i>
+        </div>
+        <div class="col-2" (click)="zoomOut()" style="border-right: 2px solid white">
+            <i class="fas fa-search-minus footer-ico"></i>
+        </div>
+        <div class="col-2">
+            <span class="word-number">
+                {{word_cloud.length}}
+            </span>
+        </div>
+      </div>
+  </div>
+</div>
+
+
 
