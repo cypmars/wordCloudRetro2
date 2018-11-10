@@ -1,7 +1,6 @@
 import { Component, OnInit, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
 import { AgWordCloudData, AgWordCloudDirective, AgWordCloudModule } from 'angular6-word-cloud-evolution';
 import { CompleterService, CompleterData } from 'ng2-completer';
-import * as SvgPanZoom from 'svg-pan-zoom';
 
 @Component({
   selector: 'app-root',
