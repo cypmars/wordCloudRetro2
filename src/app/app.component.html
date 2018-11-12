@@ -2,7 +2,7 @@
 <!-- <div style="height: 15%; text-align: center">
   <img src="assets/cg_logo.png" width="300px;" style="margin-top:20px; margin-bottom: 20px;">
 </div> -->
-<div class="row" style="margin-top: 20px;">
+<div class="row" style="margin-top: 20px; margin-bottom: 20px;">
   <div class="col-1">
   </div>
   <div class="col-md-10 col-sm-12">
@@ -81,14 +81,78 @@
   </div>
   <div class="col-1"></div>
 </div>
-<div class="div-svg text-center" *ngIf="activeViewIndex === 0">
-  <div class="auto-width" #myIdentifier>
+<div class="div-svg text-center" >
+  <div class="auto-width" #myIdentifier *ngIf="activeViewIndex === 0">
       <div AgWordCloud
       class="auto-width"
       #word_cloud_chart=ag-word-cloud
       [wordData]="word_cloud"
        [options]="options">
       </div>
+  </div>
+  <div>
+    <div class="row justify-content-center" *ngIf="activeViewIndex === 1">
+        <div class="col-3">
+            <h2>8 pts</h2>
+            <p *ngFor="let word of word_cloud">
+                <span *ngIf="word.size === 40" [style.color]="word.color" [style.font-size.px]="word.size">{{word.text}}</span>
+            </p>
+        </div>
+        <div class="col-3">
+            <h2>5 pts</h2>
+            <p *ngFor="let word of word_cloud">
+                <span *ngIf="word.size === 25" [style.color]="word.color" [style.font-size.px]="word.size">{{word.text}}</span>
+            </p>
+        </div>
+        <div class="col-3">
+            <h2>3 pts</h2>
+            <p *ngFor="let word of word_cloud">
+                <span *ngIf="word.size === 15" [style.color]="word.color" [style.font-size.px]="word.size">{{word.text}}</span>
+            </p>
+        </div>
+        <div class="col-3">
+            <h2>2 pts</h2>
+            <p *ngFor="let word of word_cloud">
+                <span *ngIf="word.size === 10" [style.color]="word.color" [style.font-size.px]="word.size">{{word.text}}</span>
+            </p>
+        </div>
+    </div>
+    <div class="row justify-content-center" *ngIf="activeViewIndex === 2">
+        <div class="col-3">
+            <h2><i class="fas fa-circle colortext2"></i></h2>
+            <p *ngFor="let word of word_cloud">
+                <span *ngIf="word.color === colorArray[0].code" [style.color]="word.color" [style.font-size.px]="word.size">{{word.text}}</span>
+            </p>
+        </div>
+        <div class="col-3">
+            <h2><i class="fas fa-circle colortext3"></i></h2>
+            <p *ngFor="let word of word_cloud">
+                <span *ngIf="word.color === colorArray[1].code" [style.color]="word.color" [style.font-size.px]="word.size">{{word.text}}</span>
+            </p>
+        </div>
+        <div class="col-3">
+            <h2><i class="fas fa-circle colortext4"></i></h2>
+            <p *ngFor="let word of word_cloud">
+                <span *ngIf="word.color === colorArray[2].code" [style.color]="word.color" [style.font-size.px]="word.size">{{word.text}}</span>
+            </p>
+        </div>
+        <div class="col-3">
+            <h2><i class="fas fa-circle colortext5"></i></h2>
+            <p *ngFor="let word of word_cloud">
+                <span *ngIf="word.color === colorArray[3].code" [style.color]="word.color" [style.font-size.px]="word.size">{{word.text}}</span>
+            </p>
+        </div>
+    </div>
+    <div *ngIf="activeViewIndex === 3">
+        <div class="row justify-content-center" *ngFor="let grp of grpTheme; let i = index">
+            <div class="col-3" *ngFor="let theme of grp">
+                <h2>{{theme}}</h2>
+                <p *ngFor="let word of word_cloud">
+                    <span *ngIf="word.theme === theme" [style.color]="word.color" [style.font-size.px]="word.size">{{word.text}}</span>
+                </p>
+            </div>
+        </div>
+    </div>
   </div>
   <div class="footer-svg">
       <div class="row footer-row">
@@ -101,12 +165,18 @@
         <div class="col-2" (click)="exportPNG()" style="border-right: 2px solid white">
             <i class="fas fa-download footer-ico"></i>
         </div>
-        <div class="col-2" (click)="zoomIn()">
+        <div class="col-4" (click)="changeView()" style="border-right: 2px solid white">
+            <i class="fas fa-cloud footer-ico" *ngIf="activeViewIndex === 3"></i>
+            <i class="fas fa-list-ol footer-ico" *ngIf="activeViewIndex === 0"></i>
+            <i class="fas fa-list-ul footer-ico" *ngIf="activeViewIndex === 1"></i>
+            <i class="fas fa-th-list footer-ico" *ngIf="activeViewIndex === 2"></i>
+        </div>
+        <!-- <div class="col-2" (click)="zoomIn()">
             <i class="fas fa-search-plus footer-ico"></i>
         </div>
         <div class="col-2" (click)="zoomOut()" style="border-right: 2px solid white">
             <i class="fas fa-search-minus footer-ico"></i>
-        </div>
+        </div> -->
         <div class="col-2">
             <span class="word-number">
                 {{word_cloud.length}}

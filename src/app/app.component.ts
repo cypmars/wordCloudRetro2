@@ -26,6 +26,7 @@ export class AppComponent implements OnInit {
   // Theme choice and suggestions
   public theme = '';
   public itemsTheme = [];
+  public grpTheme = [];
 
   // Importance choice and selection
   public importanceArray = [1, 2, 3, 5, 8];
@@ -48,6 +49,7 @@ export class AppComponent implements OnInit {
   // WordCloud controls
   public canvasWidth: number;
   public canvasHeight: number;
+
   public word_cloud: Array<AgWordCloudData> = [];
 
   public options = {
@@ -68,6 +70,7 @@ export class AppComponent implements OnInit {
   constructor(completerService: CompleterService) {
     this.completeService = completerService;
     this.dataService = this.completeService.local(this.itemsTheme);
+    this.grpTheme = new Array();
   }
   public ngOnInit() {
     // console.log(this.myIdentifier.nativeElement.offsetWidth);
@@ -100,24 +103,72 @@ export class AppComponent implements OnInit {
         this.dataService = this.completeService.local(this.itemsTheme);
       }
       this.word_cloud.push(word);
-      this.word_cloud_chart.update();
+      if (this.activeViewIndex === 0) {
+        this.word_cloud_chart.update();
+      }
+
       this.newWord = '';
       this.theme = '';
+
+      if (this.activeViewIndex === 3) {
+        for (const i in this.itemsTheme) {
+          if (true) {
+            const i4 = Number(i) / 4;
+            let i5 = -1;
+            console.log('i4: ', i4);
+            if (Number.isInteger(i4)) {
+              i5 = Math.ceil(i4);
+              console.log('i5: ', i5);
+              this.grpTheme[i5] = new Array();
+            } else {
+              i5 = Math.ceil(i4) - 1;
+              console.log('i5: ', i5);
+            }
+            console.log('grptheme: ', this.grpTheme);
+            this.grpTheme[i5].push(this.itemsTheme[i]);
+          }
+        }
+      }
     }
   }
 
   public changeView() {
-    this.activeViewIndex += 1 % 3;
+    this.activeViewIndex = (this.activeViewIndex + 1) % 4;
+    if (this.activeViewIndex === 3) {
+      for (const i in this.itemsTheme) {
+        if (true) {
+          const i4 = Number(i) / 4;
+          let i5 = -1;
+          console.log('i4: ', i4);
+          if (Number.isInteger(i4)) {
+            i5 = Math.ceil(i4);
+            console.log('i5: ', i5);
+            this.grpTheme[i5] = new Array();
+          } else {
+            i5 = Math.ceil(i4) - 1;
+            console.log('i5: ', i5);
+          }
+          console.log('grptheme: ', this.grpTheme);
+          this.grpTheme[i5].push(this.itemsTheme[i]);
+        }
+      }
+    }
   }
 
   public reload() {
-    this.word_cloud_chart.update();
+    if (this.activeViewIndex === 0) {
+      this.word_cloud_chart.update();
+    }
   }
 
   public removeAll() {
       this.word_cloud = [];
-      this.word_cloud_chart.wordData = [];
-      this.word_cloud_chart.update();
+      this.itemsTheme = [];
+      this.grpTheme = [];
+      if (this.activeViewIndex === 0) {
+        this.word_cloud_chart.wordData = [];
+        this.word_cloud_chart.update();
+      }
   }
 
   public exportPNG() {

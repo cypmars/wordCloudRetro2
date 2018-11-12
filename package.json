@@ -27,7 +27,7 @@
     "@angular/router": "^6.1.0",
     "@types/d3": "^5.0.1",
     "@types/jquery": "^3.3.22",
-    "angular6-word-cloud-evolution": "0.0.1",
+    "angular6-word-cloud-evolution": "0.0.2",
     "bootstrap": "^4.1.3",
     "core-js": "^2.5.4",
     "d3": "^5.7.0",
